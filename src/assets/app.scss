@@ -4,9 +4,11 @@
 @import './style/var';
 @import './style//colors';
 @import './style/mixin';
+@import './icons/bootstrap-icons';
 
 body {
-  font-family: $font-base;
+  font-family: $font-second;
+  background-color: #36363a;
 }
 .safe-area {
   padding: 16px;

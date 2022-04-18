@@ -1,21 +1,25 @@
 .home-page {
-  h1 {
-    font-family: 'Courier New', Courier, monospace;
-  }
   line-height: 1.5;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  .rotate {
-    animation: rotation 3s infinite linear;
+  .container-fluid {
+    height: 100%;
+    .row {
+      height: inherit;
+    }
   }
-  @keyframes rotation {
-    from {
-      transform: rotate(359deg);
-    }
-    to {
-      transform: rotate(0deg);
-    }
+  .search-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
+  .header-hero {
+    color: #fff;
+    font-size: 40px;
+    margin-bottom: 36px;
+    font-weight: bold;
   }
 }
