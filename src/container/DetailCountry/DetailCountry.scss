@@ -1,11 +1,35 @@
 .detail-country-page {
-  h1 {
-    font-family: 'Courier New', Courier, monospace;
-  }
   line-height: 1.5;
   height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
   text-align: center;
   color: white;
+  max-width: 700px;
+  margin: auto;
+  box-sizing: border-box;
+  .flag {
+    img {
+      width: 300px;
+      height: 200px;
+      object-fit: contain;
+    }
+  }
+  .country-info {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    margin-left: 30px;
+    .item {
+      display: flex;
+      gap: 6px;
+   
+      text-align: left;
+      .col-left {
+        flex: 0 0 120px;
+        font-weight: bold;
+      }
+    }
+  }
 }
