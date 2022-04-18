@@ -1,5 +1,6 @@
 import { RouteProps } from 'react-router-dom';
 import HomePage from '../container/Home/Home.page';
+import DetailCountryPage from '../container/DetailCountry/DetailCountry.page';
 
 export interface IRoute extends RouteProps {
   key: number;
@@ -14,6 +15,12 @@ const Routes: Array<IRoute> = [
     path: '/',
     exact: true,
     element: HomePage,
+  },
+  {
+    key: 2,
+    path: '/:id',
+    exact: true,
+    element: DetailCountryPage,
   },
 ];
 

@@ -56,7 +56,24 @@ const useClientRestCountry = () => {
     }
   };
 
-  return { searchCountry, loading, error };
+  const searchCountryID = async (id: string, config?: AxiosRequestConfig) => {
+    setLoading(true);
+    try {
+      const responses = await client.get(`alpha/${id}`, config);
+      return Promise.resolve(responses.data);
+    } catch (err: any) {
+      setError({
+        errorState: true,
+        errorStatus: err.response.status,
+        message: err.message,
+      });
+      return Promise.reject(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { searchCountry, searchCountryID, loading, error };
 };
 
 export default useClientRestCountry;
