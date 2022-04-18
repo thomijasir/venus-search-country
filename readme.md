@@ -1,5 +1,4 @@
 # Country Search - Rect Hook 18
-------------------
 
 Hello every one, this is one of my sample test project, using hook and react 18, i build this project using my own architecture start from scratch.
 
