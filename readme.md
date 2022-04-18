@@ -22,7 +22,7 @@ and the other thing you might be know this project is zero vulnerability because
 
 ### Wanna try in you local machine?
 
-just pull this project run the react
+just pull this project run the react, and required **node 16.13**.
 ```
 - npm install
 - npm run dev:stag
@@ -31,4 +31,4 @@ just pull this project run the react
 ### Demo App
 ------------------
 don't want running project on local? here as the sample output.
-![Demo Application](https://cdn.glitch.com/worldscollide2.jpg)
+![Demo Application](https://github.com/thomijasir/venus-search-country/blob/main/demo.gif)
