@@ -5,28 +5,74 @@ exports[`HomePage Container Snap Test render() renders the component 1`] = `
   className="home-page safe-area"
 >
   <div
-    className="container-fluid"
+    className="search-content"
   >
     <div
-      className="row"
+      className="header-hero"
+    >
+      Search Country
+    </div>
+    <div
+      className="autocomplete-input"
     >
       <div
-        className="col-lg-12"
+        className="layer-blur "
+        onClick={[Function]}
+      />
+      <div
+        className="search-icon"
       >
-        <img
-          alt="react-logo"
-          className="rotate"
-          src="react.svg"
+        <i
+          className="bi bi-search"
         />
-        <h1>
-          React Boilerplate
-        </h1>
-        <p>
-          Project Template with the latest react hook, simple clean and no vulnerability package
-        </p>
-        <small>
-          React Template by Thomi Jasir
-        </small>
+      </div>
+      <div
+        className="input-box-area "
+      >
+        <input
+          onChange={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          placeholder="Search country name.."
+          type="text"
+          value=""
+        />
+        <div
+          className="list-view"
+        >
+          <div
+            className="list-item helper"
+          >
+            <div
+              className="icon-item"
+            />
+            <div
+              className="text-item"
+            >
+              Lets, search country..
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="loading-indicator "
+      >
+        <div
+          className="spinning"
+        >
+          <i
+            className="bi bi-hypnotize"
+          />
+        </div>
+      </div>
+      <div
+        className="close-icon "
+        onClick={[Function]}
+      >
+        <i
+          className="bi bi-x-circle"
+        />
       </div>
     </div>
   </div>
