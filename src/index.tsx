@@ -1,5 +1,5 @@
 // import 'react-app-polyfill/stable';
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import APP_ROUTER, { IRoute } from './services/Router';
@@ -19,11 +19,9 @@ const App: FC = () => {
     setAppReady(true);
   }, []);
 
-  return (
-    <>
-      <LoadingGeneral {...context.loadingState} />
-      <ErrorGeneral {...context.errorState} />
-      {appReady && (
+  const memoizeRouter = useMemo(
+    () =>
+      appReady && (
         <BrowserRouter>
           <Routes>
             {APP_ROUTER.map((item: IRoute) => (
@@ -32,7 +30,15 @@ const App: FC = () => {
             <Route path="*" element={<p>404 Page</p>} />
           </Routes>
         </BrowserRouter>
-      )}
+      ),
+    [appReady],
+  );
+
+  return (
+    <>
+      <LoadingGeneral {...context.loadingState} />
+      <ErrorGeneral {...context.errorState} />
+      {memoizeRouter}
     </>
   );
 };

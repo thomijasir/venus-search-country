@@ -1,5 +1,11 @@
-import React, { FC, ReactElement, useEffect, useMemo, useReducer } from 'react';
-import { setAction } from './AppAction';
+import React, {
+  FC,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+} from 'react';
 import appReducers, {
   initialState,
   makeInitialState,
@@ -7,18 +13,24 @@ import appReducers, {
   SET_LOADING,
   SET_ERROR,
 } from './AppReducers';
-import { ILoadingGeneralProps } from '../components/LoadingGeneral/LoadingGeneral.comp';
-import { IErrorGeneralProps } from '../components/ErrorGeneral/ErrorGeneral.comp';
 import { APP_CONTEXT, RESISTANCE_CONTEXT } from '../constants';
 
 export interface IContext extends IAppContext {
-  dispatch: React.Dispatch<any>;
-  setLoading: (value: ILoadingGeneralProps) => void;
-  setError: (value: IErrorGeneralProps) => void;
+  setContext: (type: string, payload: any) => void;
+  setLoading: (isLoading: boolean, text?: string) => void;
+  setError: (
+    isError: boolean,
+    title?: string,
+    message?: string,
+    image?: string,
+  ) => void;
 }
 
 export const AppContext: React.Context<IContext> =
   React.createContext(initialState);
+
+// MEMOIZE FROM CONTEXT
+export const AppContextMemoize = React.memo(AppContext.Provider);
 
 const AppProvider: FC<{ children: ReactElement }> = ({ children }) => {
   const [state, dispatch] = useReducer(appReducers, makeInitialState());
@@ -30,19 +42,45 @@ const AppProvider: FC<{ children: ReactElement }> = ({ children }) => {
   }
   // ! USE CONTEXT BE WISE, ONLY USE CONTEXT API IF DATA NEED TO PASS TO OTHER COMPONENT
   // ! DON'T USE CONTEXT TO STORE ALL DATA, CONTEXT OR REDUX MIGHT USE HIGH RESOURCE OF RAM
+
+  const handleContext = useCallback((type: string, payload: any) => {
+    dispatch({
+      type,
+      payload,
+    });
+  }, []);
+
+  const handleLoading = useCallback((isLoading: boolean, text?: string) => {
+    dispatch({
+      type: SET_LOADING,
+      payload: {
+        isLoading,
+        text,
+      },
+    });
+  }, []);
+
+  const handleError = useCallback(
+    (isError: boolean, title?: string, message?: string, image?: string) => {
+      dispatch({
+        type: SET_ERROR,
+        payload: { isError, title, message, image },
+      });
+    },
+    [],
+  );
+
   const context = useMemo<IContext>(
     () => ({
       ...state,
-      dispatch,
-      setLoading: (value: ILoadingGeneralProps) =>
-        setAction(value, SET_LOADING, dispatch),
-      setError: (value: IErrorGeneralProps) =>
-        setAction(value, SET_ERROR, dispatch),
+      setContext: handleContext,
+      setLoading: handleLoading,
+      setError: handleError,
     }),
     [state],
   );
 
-  return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
+  return <AppContextMemoize value={context}>{children}</AppContextMemoize>;
 };
 
 export default AppProvider;

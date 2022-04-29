@@ -33,6 +33,7 @@ export const AutoCompleteInputDefaultProps = {
 export const AutoCompleteInputNamespace = 'AutoCompleteInput';
 
 const AutoCompleteInput: FC<IAutoCompleteInputProps> = (props) => {
+  // console.log('RENDER AUTO COMPLETE');
   const {
     onChange,
     onSelect,

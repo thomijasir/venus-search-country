@@ -1,4 +1,4 @@
-import React, { FC, useState, useContext } from 'react';
+import React, { FC, useState, useContext, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../store/AppProvider';
 import AutoCompleteInput, {
@@ -6,9 +6,7 @@ import AutoCompleteInput, {
 } from '../../components/AutoCompleteInput/AutoCompleteInput.comp';
 import useClientRestCountry from '../../hooks/useClientRestCountry';
 import { ICountryItem } from '../../interfaces/IResponses';
-import BoxList, {
-  IBoxItem,
-} from '../../components/TemplateComp copy/BoxList.comp';
+import BoxList, { IBoxItem } from '../../components/BoxList/BoxList.comp';
 import { useStorage } from '../../hooks/useStorage';
 import './Home.scss';
 
@@ -18,16 +16,16 @@ const Home: FC<IProps> = () => {
   const [autoCompleteLoad, setAutoCompleteLoad] = useState<boolean>(false);
   const [suggestionNull, setSuggestionNull] = useState<boolean>(false);
   const [suggestionList, setSuggestionList] = useState<IListSuggestion[]>([]);
-  const [recent, setRecent] = useStorage('RECENT_COUNTRY', {});
+  const [recent, setRecent] = useStorage('RECENT_COUNTRY', []);
   const context = useContext(AppContext);
   const { searchCountry } = useClientRestCountry();
   const navigate = useNavigate();
 
-  const handleOnChange = () => {
+  const handleOnChange = useCallback(() => {
     setAutoCompleteLoad(true);
-  };
+  }, []);
 
-  const handleOnFinishTyping = (e: string) => {
+  const handleOnFinishTyping = useCallback((e: string) => {
     searchCountry(e)
       .then((res: ICountryItem[]) => {
         setSuggestionList(mapSetSuggestion(res));
@@ -39,9 +37,9 @@ const Home: FC<IProps> = () => {
       .finally(() => {
         setAutoCompleteLoad(false);
       });
-  };
+  }, []);
 
-  const handleOnSelect = (data: IListSuggestion) => {
+  const handleOnSelect = useCallback((data: IListSuggestion) => {
     // UPDATE RECENTS
     if (recent.length <= 0) {
       setRecent([data]);
@@ -50,17 +48,17 @@ const Home: FC<IProps> = () => {
       setRecent(newRecent);
     }
     // SET LOADING
-    context.setLoading({ isLoading: true });
+    context.setLoading(true);
     // NEXT DETAIL PAGE
     navigate(`/${data.id}`);
-  };
+  }, []);
 
-  const handleOnSelectRecent = (data: IBoxItem) => {
+  const handleOnSelectRecent = useCallback((data: IBoxItem) => {
     // SET LOADING
-    context.setLoading({ isLoading: true });
+    context.setLoading(true);
     // NEXT DETAIL PAGE
     navigate(`/${data.id.split('-')[0]}`);
-  };
+  }, []);
 
   const mapSetSuggestion = (data: ICountryItem[]) => {
     return data.map(
@@ -84,6 +82,8 @@ const Home: FC<IProps> = () => {
         } as IBoxItem),
     );
 
+  const boxItemList = useMemo(() => mapBoxList(recent).slice(0, 10), [recent]);
+
   return (
     <div className="home-page safe-area">
       <div className="header-hero">Search Country</div>
@@ -98,10 +98,7 @@ const Home: FC<IProps> = () => {
         />
       </div>
       <div className="recent-search">
-        <BoxList
-          itemList={mapBoxList(recent).slice(0, 10)}
-          onSelect={handleOnSelectRecent}
-        />
+        <BoxList itemList={boxItemList} onSelect={handleOnSelectRecent} />
       </div>
     </div>
   );

@@ -38,4 +38,4 @@ const BoxList: FC<IBoxListProps> = (props) => {
 
 BoxList.displayName = BoxListNamespace;
 BoxList.defaultProps = BoxListDefaultProps;
-export default BoxList;
+export default React.memo(BoxList);

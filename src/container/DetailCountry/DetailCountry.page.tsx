@@ -15,21 +15,21 @@ const DetailCountry: FC<IProps> = () => {
 
   useEffect(() => {
     if (!context.loadingState.isLoading) {
-      context.setLoading({ isLoading: true });
+      context.setLoading(true);
     }
     searchCountryID(params.id || '')
       .then((data: IDetailCountry) => {
         setCountry(data);
       })
       .catch(() => {
-        context.setError({
-          isError: true,
-          title: 'Country not found!',
-          message: "The country that you're looking for is unavailable ",
-        });
+        context.setError(
+          true,
+          'Country not found!',
+          "The country that you're looking for is unavailable",
+        );
       })
       .finally(() => {
-        context.setLoading({ isLoading: false });
+        context.setLoading(false);
       });
   }, []);
 
