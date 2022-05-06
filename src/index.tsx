@@ -10,14 +10,14 @@ import ErrorGeneral from './components/ErrorGeneral/ErrorGeneral.comp';
 import './assets/app.scss';
 
 const App: FC = () => {
-  const [appReady, setAppReady] = useState<boolean>(false);
+  const [appReady, setAppReady] = useState<boolean>(true);
   const context = useContext(AppContext);
 
-  useEffect(() => {
-    // * IT WILL USE IF APP REQUIRED FETCH DATA BEFORE RENDER CONTAINER
-    // ? FOR SOME CASE THAT APP NEED TOKEN BEFORE RENDER
-    setAppReady(true);
-  }, []);
+  // useEffect(() => {
+  // * IT WILL USE IF APP REQUIRED FETCH DATA BEFORE RENDER CONTAINER
+  // ? FOR SOME CASE THAT APP NEED TOKEN BEFORE RENDER
+  //   setAppReady(true);
+  // }, []);
 
   const memoizeRouter = useMemo(
     () =>
