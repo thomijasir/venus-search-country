@@ -1,5 +1,5 @@
 // import 'react-app-polyfill/stable';
-import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
+import React, { FC, useContext, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import APP_ROUTER, { IRoute } from './services/Router';
@@ -10,7 +10,7 @@ import ErrorGeneral from './components/ErrorGeneral/ErrorGeneral.comp';
 import './assets/app.scss';
 
 const App: FC = () => {
-  const [appReady, setAppReady] = useState<boolean>(true);
+  const [appReady] = useState<boolean>(true);
   const context = useContext(AppContext);
 
   // useEffect(() => {
