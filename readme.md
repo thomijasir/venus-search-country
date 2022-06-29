@@ -31,3 +31,5 @@ just pull this project run the react, and required **node 16.13**.
 ------------------
 don't want running project on local? here as the sample output.
 ![Demo Application](https://github.com/thomijasir/venus-search-country/blob/main/demo.gif)
+
+see the network, only call when the need and only render when they update :)
